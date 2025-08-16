@@ -1,0 +1,2728 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本旅游攻略 - 暑期大阪之旅</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --animation-duration: 0.4s;
+            --timeline-width: 4px;
+            --card-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            --hover-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+            --route-details-duration: 0.5s;
+            --route-details-easing: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .trip-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            margin: 10px;
+            text-align: center;
+            min-width: 200px;
+            transition: transform var(--animation-duration) ease, box-shadow var(--animation-duration) ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .timeline {
+            position: relative;
+            margin: 50px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: var(--timeline-width);
+            background: linear-gradient(180deg, #e74c3c, #f39c12, #27ae60, #3498db, #9b59b6);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideIn 0.8s ease-out forwards;
+        }
+
+        .timeline-item:nth-child(odd) {
+            animation-delay: 0.2s;
+        }
+
+        .timeline-item:nth-child(even) {
+            animation-delay: 0.4s;
+        }
+
+        .timeline-item:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .timeline-item:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        .timeline-item:nth-child(5) {
+            animation-delay: 1s;
+        }
+
+        .timeline-item:nth-child(6) {
+            animation-delay: 1.2s;
+        }
+
+        .timeline-item:nth-child(7) {
+            animation-delay: 1.4s;
+        }
+
+        .timeline-item:nth-child(8) {
+            animation-delay: 1.6s;
+        }
+
+        .timeline-content {
+            position: relative;
+            width: 45%;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all var(--animation-duration) ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            left: 0;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            left: 55%;
+            border-right: 4px solid #3498db;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: #f39c12;
+        }
+
+        .timeline-content.expanded {
+            transform: scale(1.02);
+            z-index: 10;
+        }
+
+        .timeline-date {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            color: #34495e;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border: 4px solid #e74c12;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            border-color: #3498db;
+        }
+
+        .timeline-content:hover + .timeline-dot,
+        .timeline-content.expanded + .timeline-dot {
+            transform: translate(-50%, -50%) scale(1.5);
+            box-shadow: 0 0 20px rgba(231, 76, 18, 0.6);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content:hover + .timeline-dot,
+        .timeline-item:nth-child(even) .timeline-content.expanded + .timeline-dot {
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.6);
+        }
+
+        .timeline-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: rgba(236, 240, 241, 0.8);
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .timeline-details.show {
+            max-height: 1000px;
+            padding: 20px;
+        }
+
+        .route-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            border-left: 4px solid #e74c3c;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            min-height: 80px;
+        }
+
+        .route-item:nth-child(even) {
+            border-left-color: #3498db;
+        }
+
+        .route-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .route-item:active {
+            transform: translateX(4px) scale(0.98);
+            transition: all 0.1s ease;
+        }
+
+        .route-from, .route-to {
+            flex: 1;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #2c3e50;
+        }
+
+        .route-transport {
+            flex: 1.5;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1rem;
+            padding: 0 10px;
+        }
+
+        .route-details {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            /* 完全禁用所有动画和过渡效果 */
+            transition: none !important;
+            animation: none !important;
+            /* 确保完全固定，不受任何影响 */
+            will-change: auto !important;
+            transform-style: flat !important;
+            backface-visibility: hidden !important;
+            /* 强制固定定位，防止任何移动 */
+            -webkit-transform: translate(-50%, -50%) !important;
+            -ms-transform: translate(-50%, -50%) !important;
+            transform: translate(-50%, -50%) !important;
+            /* 防止触摸事件干扰 */
+            touch-action: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* 新增：路线详情信息始终显示在屏幕中央 */
+        .route-details-info {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            z-index: 1001;
+            display: none; /* 初始状态隐藏 */
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            /* 完全固定，不受任何影响 */
+            will-change: auto !important;
+            transform-style: flat !important;
+            backface-visibility: hidden !important;
+            /* 强制固定位置，防止任何移动 */
+            -webkit-transform: translate(-50%, -50%) !important;
+            -ms-transform: translate(-50%, -50%) !important;
+            transform: translate(-50%, -50%) !important;
+            /* 确保内容居中显示 */
+            text-align: center;
+        }
+
+        /* 关闭按钮样式 */
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            background: rgba(231, 76, 60, 0.8);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            z-index: 1002;
+        }
+
+        .close-button:hover {
+            background: rgba(231, 76, 60, 1);
+        }
+
+        .route-details.show {
+            opacity: 1;
+            visibility: visible;
+            /* 保持完全居中，无缩放 */
+            transform: translate(-50%, -50%);
+        }
+
+        /* 当路线详情展开时，禁用所有悬停效果 */
+        .route-details.show * {
+            pointer-events: auto;
+        }
+
+        .route-details.show .route-item:hover {
+            transform: none !important;
+            box-shadow: none !important;
+            background: rgba(255, 255, 255, 0.98) !important;
+        }
+
+        .route-details.show .timeline-content:hover {
+            transform: none !important;
+            box-shadow: none !important;
+            border-color: transparent !important;
+        }
+
+        .route-details.show .info-card:hover {
+            transform: none !important;
+            box-shadow: var(--card-shadow) !important;
+        }
+
+        /* 全局禁用悬停效果 - 更严格的规则 */
+        body.route-details-open .route-item:hover {
+            transform: none !important;
+            box-shadow: none !important;
+            background: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        body.route-details-open .timeline-content:hover {
+            transform: none !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+            border-color: transparent !important;
+        }
+
+        body.route-details-open .info-card:hover {
+            transform: none !important;
+            box-shadow: var(--card-shadow) !important;
+        }
+
+        body.route-details-open .timeline-dot:hover {
+            transform: translate(-50%, -50%) scale(1) !important;
+            box-shadow: none !important;
+        }
+
+        /* 确保在路线详情展开时，所有可能的悬停效果都被禁用 */
+        /* body.route-details-open *:hover {
+            transform: none !important;
+        } */
+
+        body.route-details-open .route-item:active {
+            transform: none !important;
+        }
+
+        body.route-details-open .timeline-content:active {
+            transform: none !important;
+        }
+
+        body.route-details-open .info-card:active {
+            transform: none !important;
+        }
+
+        /* 新增：当路线详情展开时，完全禁用时间线内容的悬停效果 */
+        body.route-details-open .timeline-content {
+            pointer-events: none !important;
+        }
+
+        body.route-details-open .timeline-content .timeline-details {
+            pointer-events: auto !important;
+        }
+
+        /* 新增：当路线详情展开时，禁用所有动画和过渡效果 */
+        body.route-details-open .timeline-content,
+        body.route-details-open .route-item,
+        body.route-details-open .info-card,
+        body.route-details-open .timeline-dot {
+            transition: none !important;
+            animation: none !important;
+        }
+
+        /* 新增：路线详情框内的所有元素都不应该有悬停效果 */
+        .route-details.show * {
+            transition: none !important;
+            animation: none !important;
+            transform: none !important;
+        }
+
+        /* 路线详情框完全固定，绝对不允许任何移动 */
+        .route-details.show {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            z-index: 1000 !important;
+            /* 完全禁止任何变换和移动 */
+            will-change: auto !important;
+            transform-style: flat !important;
+            backface-visibility: hidden !important;
+            /* 强制固定位置，防止任何JavaScript干扰 */
+            -webkit-transform: translate(-50%, -50%) !important;
+            -ms-transform: translate(-50%, -50%) !important;
+            transform: translate(-50%, -50%) !important;
+            /* 禁用所有可能的用户交互干扰 */
+            touch-action: none !important;
+            -webkit-user-select: none !important;
+            user-select: none !important;
+            /* 防止任何CSS动画或过渡 */
+            transition: none !important;
+            animation: none !important;
+        }
+
+        /* 移动端特殊定位优化 */
+        @media (max-width: 768px) {
+            .route-details.show {
+                /* 确保在移动端也能准确定位 */
+                -webkit-transform: translate(-50%, -50%) !important;
+                -ms-transform: translate(-50%, -50%) !important;
+                /* 防止移动端滚动影响定位 */
+                position: fixed !important;
+                top: 50% !important;
+                left: 50% !important;
+            }
+            
+            .route-details-info {
+                /* 移动端优化 */
+                width: 95%;
+                max-width: none;
+                max-height: 85vh;
+                padding: 20px;
+            }
+            
+            .close-button {
+                /* 移动端关闭按钮优化 */
+                top: 10px;
+                right: 15px;
+                width: 25px;
+                height: 25px;
+                font-size: 16px;
+            }
+        }
+
+        /* 全局防止任何元素影响路线详情位置 */
+        body.route-details-open {
+            /* 防止body滚动影响固定定位 */
+            overflow: hidden !important;
+            position: relative !important;
+        }
+
+        /* 确保路线详情在所有情况下都保持固定位置 */
+        .route-details.show,
+        .route-details.show * {
+            /* 绝对禁止任何变换 */
+            transform: none !important;
+            -webkit-transform: none !important;
+            -ms-transform: none !important;
+            /* 禁止所有动画和过渡 */
+            transition: none !important;
+            animation: none !important;
+            /* 禁止任何可能的位置变化 */
+            position: static !important;
+        }
+
+        /* 路线详情框本身除外，必须保持固定定位 */
+        .route-details.show {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            -webkit-transform: translate(-50%, -50%) !important;
+            -ms-transform: translate(-50%, -50%) !important;
+        }
+
+        /* 最终防护：确保路线详情框完全不受任何JavaScript或CSS影响 */
+        .route-details.show {
+            /* 强制固定位置，覆盖所有可能的样式 */
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            -webkit-transform: translate(-50%, -50%) !important;
+            -ms-transform: translate(-50%, -50%) !important;
+            /* 禁用所有可能的干扰 */
+            will-change: auto !important;
+            transform-style: flat !important;
+            backface-visibility: hidden !important;
+            /* 防止触摸和用户交互干扰 */
+            touch-action: none !important;
+            -webkit-user-select: none !important;
+            user-select: none !important;
+            /* 确保z-index最高 */
+            z-index: 1000 !important;
+        }
+
+        /* 防止任何父元素影响路线详情 */
+        body.route-details-open .route-details.show {
+            /* 强制覆盖所有继承的样式 */
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            -webkit-transform: translate(-50%, -50%) !important;
+            -ms-transform: translate(-50%, -50%) !important;
+        }
+
+        /* 遮罩层 */
+        .route-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            /* 移除动画效果 */
+            transition: none;
+            z-index: 999;
+            pointer-events: auto;
+        }
+
+        .route-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .detail-section {
+            margin-bottom: 15px;
+        }
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-content {
+            color: #34495e;
+            line-height: 1.6;
+            margin-left: 24px;
+        }
+
+        .transport-info {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid #3498db;
+        }
+
+        .attraction-info {
+            background: rgba(231, 76, 60, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .cost-info {
+            background: rgba(46, 204, 113, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid #2ecc71;
+        }
+
+        .tip-info {
+            background: rgba(241, 196, 15, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid #f1c40f;
+        }
+
+        .japanese-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .japanese-decoration::before {
+            content: '和';
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            font-size: 8rem;
+            color: #e74c3c;
+            font-family: 'Yu Gothic', serif;
+            transform: rotate(-15deg);
+        }
+
+        .japanese-decoration::after {
+            content: '風';
+            position: absolute;
+            bottom: 10%;
+            right: 5%;
+            font-size: 8rem;
+            color: #3498db;
+            font-family: 'Yu Gothic', serif;
+            transform: rotate(15deg);
+        }
+
+        /* 动态气泡背景 */
+        .bubble-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 70%, transparent 100%);
+            border-radius: 50%;
+            animation: float-bubble 15s infinite linear;
+            opacity: 0.9;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            will-change: transform;
+        }
+
+        .bubble:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            left: 10%;
+            top: 100vh;
+            animation-delay: 0s;
+            animation-duration: 20s;
+            z-index: -1;
+        }
+
+        .bubble:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            left: 20%;
+            top: 100vh;
+            animation-delay: 2s;
+            animation-duration: 25s;
+            z-index: -1;
+        }
+
+        .bubble:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            left: 30%;
+            top: 100vh;
+            animation-delay: 4s;
+            animation-duration: 18s;
+            z-index: -1;
+        }
+
+        .bubble:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            left: 40%;
+            top: 100vh;
+            animation-delay: 6s;
+            animation-duration: 22s;
+            z-index: -1;
+        }
+
+        .bubble:nth-child(5) {
+            width: 70px;
+            height: 70px;
+            left: 50%;
+            top: 100vh;
+            animation-delay: 8s;
+            animation-duration: 19s;
+            z-index: -1;
+        }
+
+        .bubble:nth-child(6) {
+            width: 90px;
+            height: 90px;
+            left: 60%;
+            top: 100vh;
+            animation-delay: 10s;
+            animation-duration: 24s;
+            z-index: -1;
+        }
+
+        .bubble:nth-child(7) {
+            width: 50px;
+            height: 50px;
+            left: 70%;
+            top: 100vh;
+            animation-delay: 12s;
+            animation-duration: 16s;
+            z-index: -1;
+        }
+
+        .bubble:nth-child(8) {
+            width: 110px;
+            height: 110px;
+            left: 80%;
+            top: 100vh;
+            animation-delay: 14s;
+            animation-duration: 21s;
+            z-index: -1;
+        }
+
+        @keyframes float-bubble {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.9;
+            }
+            95% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header .subtitle {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+
+            .trip-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .info-card {
+                width: 100%;
+                max-width: 300px;
+                padding: 15px;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-content {
+                width: 80%;
+                left: 40px !important;
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .route-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+                min-height: 90px;
+            }
+
+            .route-from, .route-to, .route-transport {
+                margin-bottom: 8px;
+                font-size: 0.9rem;
+            }
+
+            .route-details {
+                padding: 20px !important;
+                width: 95%;
+                max-width: none;
+                max-height: 85vh;
+                transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+
+            .detail-section {
+                margin-bottom: 12px;
+            }
+
+            .detail-title {
+                font-size: 0.9rem;
+                margin-bottom: 6px;
+            }
+
+            .detail-content {
+                font-size: 0.85rem;
+                margin-left: 16px;
+            }
+
+            .transport-info, .attraction-info, .cost-info, .tip-info {
+                padding: 8px;
+            }
+
+            .japanese-decoration::before,
+            .japanese-decoration::after {
+                font-size: 4rem;
+            }
+
+            .timeline-date {
+                font-size: 1.3rem;
+            }
+
+            .timeline-title {
+                font-size: 1.1rem;
+            }
+
+            /* 移动端气泡优化 */
+            .bubble {
+                animation-duration: 12s;
+                opacity: 0.8;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 5px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+                margin-bottom: 8px;
+            }
+
+            .header .subtitle {
+                font-size: 0.9rem;
+                padding: 0 5px;
+            }
+
+            .trip-info {
+                gap: 10px;
+            }
+
+            .info-card {
+                padding: 12px;
+                margin: 5px;
+            }
+
+            .info-card h3 {
+                font-size: 1rem;
+                margin-bottom: 8px;
+            }
+
+            .info-card p {
+                font-size: 0.9rem;
+                margin-bottom: 5px;
+            }
+
+            .timeline-content {
+                width: 90%;
+                left: 30px !important;
+                padding: 15px;
+            }
+
+            .timeline-dot {
+                left: 15px;
+                width: 16px;
+                height: 16px;
+            }
+
+            .timeline-date {
+                font-size: 1.2rem;
+                margin-bottom: 8px;
+            }
+
+            .timeline-title {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+
+            .route-item {
+                padding: 10px;
+                margin-bottom: 12px;
+            }
+
+            .route-from, .route-to, .route-transport {
+                font-size: 0.8rem;
+                margin-bottom: 6px;
+            }
+
+            .timeline-details.show {
+                padding: 15px;
+            }
+        }
+
+        /* 超小屏幕设备优化 */
+        @media (max-width: 360px) {
+            .header h1 {
+                font-size: 1.3rem;
+            }
+
+            .header .subtitle {
+                font-size: 0.8rem;
+            }
+
+            .timeline-content {
+                width: 95%;
+                left: 25px !important;
+                padding: 12px;
+            }
+
+            .timeline-dot {
+                left: 12px;
+                width: 14px;
+                height: 14px;
+            }
+
+            .info-card {
+                padding: 10px;
+            }
+
+            .info-card h3 {
+                font-size: 0.9rem;
+            }
+
+            .info-card p {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* 横屏模式优化 */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .header {
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+                margin-bottom: 5px;
+            }
+
+            .trip-info {
+                margin-bottom: 20px;
+            }
+
+            .timeline-item {
+                margin-bottom: 30px;
+            }
+
+            .timeline-content {
+                padding: 15px;
+            }
+        }
+
+        /* 触摸设备优化 */
+        @media (hover: none) and (pointer: coarse) {
+            .timeline-content {
+                cursor: pointer;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .timeline-content:active {
+                transform: scale(0.98);
+            }
+
+            .info-card:active {
+                transform: translateY(-2px);
+            }
+
+            .route-item:active {
+                transform: scale(0.98);
+                transition: all 0.1s ease;
+            }
+
+            /* 增加触摸目标大小 */
+            .timeline-content {
+                min-height: 80px;
+            }
+
+            .route-item {
+                min-height: 80px;
+                padding: 15px;
+            }
+
+            .route-details.show {
+                padding: 15px;
+            }
+
+            .detail-section {
+                margin-bottom: 15px;
+            }
+
+            .detail-title {
+                font-size: 1rem;
+                margin-bottom: 8px;
+            }
+
+            .detail-content {
+                font-size: 0.9rem;
+                margin-left: 20px;
+            }
+
+            /* 新增：防止触摸事件干扰路线详情定位 */
+            .route-details {
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                touch-action: manipulation;
+            }
+        }
+
+        /* 高分辨率屏幕优化 */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .timeline-dot {
+                border-width: 3px;
+            }
+
+            .timeline::before {
+                width: 3px;
+            }
+        }
+
+        /* 深色模式支持 */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            }
+
+            .timeline-content {
+                background: rgba(52, 73, 94, 0.95);
+                color: #ecf0f1;
+            }
+
+            .info-card {
+                background: rgba(52, 73, 94, 0.9);
+                color: #ecf0f1;
+            }
+
+            .timeline-details {
+                background: rgba(44, 62, 80, 0.8);
+            }
+
+            .route-item {
+                background: rgba(52, 73, 94, 0.7);
+                color: #ecf0f1;
+            }
+        }
+
+        /* 移动端滚动优化 */
+        @media (max-width: 768px) {
+            html {
+                scroll-behavior: smooth;
+            }
+            
+            body {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        /* 高对比度模式支持 */
+        @media (prefers-contrast: high) {
+            .timeline-content {
+                border-width: 3px;
+            }
+            
+            .timeline-dot {
+                border-width: 4px;
+            }
+            
+            .route-item {
+                border-left-width: 4px;
+            }
+        }
+
+        /* 减少动画偏好支持 */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .floating {
+                animation: none;
+            }
+        }
+
+        /* 打印样式 */
+        @media print {
+            .japanese-decoration {
+                display: none;
+            }
+            
+            .timeline-content {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #000;
+            }
+            
+            .timeline-details.show {
+                display: block !important;
+                max-height: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="japanese-decoration"></div>
+    
+    <!-- 动态气泡背景 -->
+    <div class="bubble-container">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+    
+    <!-- 路线详情遮罩层 -->
+    <div class="route-overlay" id="routeOverlay"></div>
+    
+    <!-- 路线详情信息 - 始终显示在屏幕中央 -->
+    <div class="route-details-info" id="routeDetailsInfo">
+        <div class="close-button" onclick="closeRouteDetails()">×</div>
+        <div class="detail-section">
+            <div class="detail-title">🇯🇵 日本旅游攻略</div>
+            <div class="detail-content transport-info">
+                点击任意路线项目查看详细信息<br>
+                包括交通方式、费用、小贴士等
+            </div>
+        </div>
+        <div class="detail-section">
+            <div class="detail-title">💡 使用说明</div>
+            <div class="detail-content tip-info">
+                点击路线项目查看详情<br>
+                点击关闭按钮或按ESC键关闭<br>
+                支持鼠标悬停和触摸操作
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <header class="header">
+            <h1 class="floating">🇯🇵 日本旅游攻略</h1>
+            <div class="subtitle">暑期大阪之旅 - 西安·京都·奈良·大阪</div>
+        </header>
+
+        <div class="trip-info">
+            <div class="info-card">
+                <h3>📅 行程日期</h3>
+                <p>2025.8.18 - 2025.8.25</p>
+                <p>8天7晚</p>
+            </div>
+            <div class="info-card">
+                <h3>👥 出行人员</h3>
+                <p>暂定4人</p>
+            </div>
+            <div class="info-card">
+                <h3>✈️ 出行方式</h3>
+                <p>飞机</p>
+            </div>
+            <div class="info-card">
+                <h3>🏠 住宿地点</h3>
+                <p>滝井金物店巷子口里</p>
+            </div>
+        </div>
+
+        <div class="timeline">
+            <!-- 8月18日 -->
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="toggleDetails(this)">
+                    <div class="timeline-date">8月18日</div>
+                    <div class="timeline-title">出发日 - 北京→西安</div>
+                    <div class="timeline-details">
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">北京首都T2</div>
+                            <div class="route-transport">✈️ 06:50-09:10</div>
+                            <div class="route-to">西安咸阳T3</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">✈️ 航班信息</div>
+                                    <div class="detail-content transport-info">
+                                        航班号：待定<br>
+                                        起飞时间：06:50<br>
+                                        到达时间：09:10<br>
+                                        飞行时长：2小时20分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        建议提前2小时到达机场<br>
+                                        西安咸阳机场有休息区，可以稍作休息
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <!-- 8月19日 -->
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="toggleDetails(this)">
+                    <div class="timeline-date">8月19日</div>
+                    <div class="timeline-title">西安→大阪</div>
+                    <div class="timeline-details">
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">西安咸阳T5</div>
+                            <div class="route-transport">✈️ 08:25-13:05</div>
+                            <div class="route-to">大阪关西国际T1</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">✈️ 航班信息</div>
+                                    <div class="detail-content transport-info">
+                                        航班号：待定<br>
+                                        起飞时间：08:25<br>
+                                        到达时间：13:05<br>
+                                        飞行时长：4小时40分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        建议提前2小时到达机场<br>
+                                        大阪关西机场有免税店，可以购买伴手礼
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">关西国际机场T1</div>
+                            <div class="route-transport">🚇 南海机场线 50-55分钟 970￥-1470￥</div>
+                            <div class="route-to">天下茶屋</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚇 交通路线</div>
+                                    <div class="detail-content transport-info">
+                                        关西机场站 → 南海机场线 → 天下茶屋站<br>
+                                        预计到达时间：下午4-5点（在机场配置服务后）
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        地铁费用：970-1470日元（根据座位等级）<br>
+                                        总用时：50-55分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        建议购买IC卡（如PASMO或ICOCA）<br>
+                                        天下茶屋站附近有便利店和餐厅<br>
+                                        可以在此站换乘其他线路前往住宿地点
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <!-- 8月20日 -->
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="toggleDetails(this)">
+                    <div class="timeline-date">8月20日</div>
+                    <div class="timeline-title">大阪城+难波</div>
+                    <div class="timeline-details">
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">住宿地点</div>
+                            <div class="route-transport">🚶‍♂️ 步行到花园町→本町→谷町四丁目 35分钟 300￥</div>
+                            <div class="route-to">大阪城公园</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚶‍♂️ 步行路线</div>
+                                    <div class="detail-content">
+                                        从滝井金物店巷子口里出发 → 花园町站（hanazono kita）→ 本町站 → 谷町四丁目站 → 步行6分钟(400m)到达大阪城公园
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        地铁费用：300日元<br>
+                                        总用时：35分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">🏰 大阪城公园</div>
+                                    <div class="detail-content attraction-info">
+                                        日本三大名城之一，春季樱花盛开，秋季红叶满园<br>
+                                        建议游览时间：2-3小时<br>
+                                        门票：免费（天守阁需另付费）<br>
+                                        必看景点：天守阁、护城河、樱花林、梅林
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        建议上午前往，避开正午高温<br>
+                                        天守阁门票约600日元，可以俯瞰大阪全景<br>
+                                        公园内有多处休息区和便利店
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">大阪城公园</div>
+                            <div class="route-transport">🚇 中央线→堺筋线 20分钟 200￥</div>
+                            <div class="route-to">黑门市场</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚇 交通路线</div>
+                                    <div class="detail-content transport-info">
+                                        谷町四丁目站 → 中央线 → 堺筋本町站 → 换乘堺筋线 → 日本桥站 → 步行到黑门市场
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        地铁费用：200日元<br>
+                                        总用时：20分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">🛒 黑门市场</div>
+                                    <div class="detail-content attraction-info">
+                                        大阪最著名的传统市场，有"大阪的厨房"之称<br>
+                                        特色：新鲜海鲜、和牛、传统小吃<br>
+                                        建议游览时间：1-2小时
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">黑门市场</div>
+                            <div class="route-transport">🚶‍♂️ 步行约1.5公里</div>
+                            <div class="route-to">八阪神社</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚶‍♂️ 步行路线</div>
+                                    <div class="detail-content">
+                                        从黑门市场出发，沿堺筋通向南步行约1.5公里<br>
+                                        步行时间：约20分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        步行免费<br>
+                                        总用时：约20分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">⛩️ 八阪神社</div>
+                                    <div class="detail-content attraction-info">
+                                        大阪市内重要的神社，祈求平安和健康<br>
+                                        特色：传统日式建筑，宁静祥和<br>
+                                        建议游览时间：30分钟<br>
+                                        必看：本殿、鸟居、手水舍
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        正好吃完饭消化消化，步行是最佳选择<br>
+                                        可以在此祈求旅途平安<br>
+                                        神社内保持安静，注意礼仪
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">八阪神社</div>
+                            <div class="route-transport">🚇 御堂筋线 20分钟 200￥</div>
+                            <div class="route-to">心斋桥筋</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚇 交通路线</div>
+                                    <div class="detail-content transport-info">
+                                        步行到大国町站 → 御堂筋线 → 心斋桥站
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        地铁费用：200日元<br>
+                                        总用时：20分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">🛍️ 心斋桥筋</div>
+                                    <div class="detail-content attraction-info">
+                                        大阪最繁华的购物区，有"东方的香榭丽舍"之称<br>
+                                        必去景点：浮世绘美术馆、宝可梦中心<br>
+                                        特色：购物、美食、娱乐一站式体验<br>
+                                        建议游览时间：2-3小时
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">🎨 浮世绘美术馆</div>
+                                    <div class="detail-content attraction-info">
+                                        展示日本传统浮世绘艺术的专业博物馆<br>
+                                        特色：江户时代版画、美人画、风景画<br>
+                                        门票：约1000日元<br>
+                                        建议游览时间：1小时
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">⚡ 宝可梦中心</div>
+                                    <div class="detail-content attraction-info">
+                                        大阪最大的宝可梦主题商店<br>
+                                        特色：宝可梦周边、限定商品、互动体验<br>
+                                        地址：心斋桥筋商店街内<br>
+                                        建议游览时间：1小时
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        心斋桥筋商店街很长，建议分段游览<br>
+                                        可以购买大阪限定宝可梦周边<br>
+                                        晚上霓虹灯亮起时景色最美
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">心斋桥筋</div>
+                            <div class="route-transport">🚇 御堂筋线→四桥线 20分钟 250￥</div>
+                            <div class="route-to">住宿地点</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚇 交通路线</div>
+                                    <div class="detail-content transport-info">
+                                        心斋桥站 → 御堂筋线 → 大国町站 → 换乘四桥线 → 花园町站 → 步行回住宿地点
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        地铁费用：250日元<br>
+                                        总用时：20分钟
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <!-- 8月21日 -->
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="toggleDetails(this)">
+                    <div class="timeline-date">8月21日</div>
+                    <div class="timeline-title">天王寺区域（大阪）</div>
+                    <div class="timeline-details">
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">住宿地点</div>
+                            <div class="route-transport">🚌 52号→62号 40分钟 450￥</div>
+                            <div class="route-to">四天王寺</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚌 交通路线</div>
+                                    <div class="detail-content transport-info">
+                                        步行到梅南二丁目站 → 52号あべの橋方向 → 阿部野桥站 → 换乘62号大阪駅前 → 天王寺警察署前 → 步行到四天王寺
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        公交费用：450日元<br>
+                                        总用时：40分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">⛩️ 四天王寺</div>
+                                    <div class="detail-content attraction-info">
+                                        日本最古老的官方寺院，建于593年<br>
+                                        特色：五重塔、金堂、讲堂、传统建筑群<br>
+                                        门票：免费（部分建筑需付费）<br>
+                                        建议游览时间：1-1.5小时<br>
+                                        必看：五重塔、金堂、讲堂、石鸟居
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        与京都和奈良的寺庙风格相似<br>
+                                        建议上午前往，避开正午高温<br>
+                                        寺内保持安静，注意礼仪
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">四天王寺</div>
+                            <div class="route-transport">🚶‍♂️ 步行18分钟 约1.3公里</div>
+                            <div class="route-to">天王寺动物园</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚶‍♂️ 步行路线</div>
+                                    <div class="detail-content">
+                                        从四天王寺步行18分钟，约1.3公里到达天王寺动物园
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">🦁 天王寺动物园</div>
+                                    <div class="detail-content attraction-info">
+                                        大阪市内最大的动物园，有100多年历史<br>
+                                        特色：大熊猫、北极熊、非洲象、各种珍稀动物<br>
+                                        门票：成人500日元<br>
+                                        建议游览时间：2-3小时<br>
+                                        必看：大熊猫、北极熊、非洲象、企鹅馆
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        建议上午前往，动物活动更活跃<br>
+                                        可以购买动物饲料与动物互动<br>
+                                        动物园内有多处休息区和餐厅<br>
+                                        注意：不要投喂规定外的食物
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">天王寺动物园</div>
+                            <div class="route-transport">🚶‍♂️ 步行4分钟 约300m</div>
+                            <div class="route-to">新世界本通商店街</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚶‍♂️ 步行路线</div>
+                                    <div class="detail-content">
+                                        从天王寺动物园步行4分钟，约300米到达新世界本通商店街
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">🛍️ 新世界本通商店街</div>
+                                    <div class="detail-content attraction-info">
+                                        大阪最古老的商店街之一，充满昭和时代风情<br>
+                                        特色：传统小吃、复古游戏厅、特色餐厅<br>
+                                        推荐：串炸、章鱼烧、大阪烧<br>
+                                        建议游览时间：1-2小时<br>
+                                        必吃：串炸、章鱼烧、大阪烧、炸串
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        这里的美食价格相对便宜<br>
+                                        可以体验传统大阪的市井生活<br>
+                                        复古游戏厅可以体验怀旧游戏<br>
+                                        建议在此享用午餐，感受地道大阪风味
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">新世界本通商店街</div>
+                            <div class="route-transport">🚶‍♂️ 步行</div>
+                            <div class="route-to">通天阁</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🗼 通天阁</div>
+                                    <div class="detail-content attraction-info">
+                                        大阪的地标建筑，高103米<br>
+                                        特色：观景台、霓虹灯、新世界象征<br>
+                                        门票：成人800日元<br>
+                                        建议游览时间：1小时<br>
+                                        必看：观景台、霓虹灯夜景、新世界全景
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        建议傍晚前往，可以欣赏日落和夜景<br>
+                                        观景台可以俯瞰整个大阪市区<br>
+                                        新世界区域饭店较贵，建议在此用餐
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">通天阁</div>
+                            <div class="route-transport">🚇 阪堺电轨阪堺线 13分钟</div>
+                            <div class="route-to">住宿地点</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚇 返程路线</div>
+                                    <div class="detail-content transport-info">
+                                        步行到惠美须町站 → 阪堺电轨阪堺线 → 今船站 → 步行13分钟约1公里到家
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        电车费用：约200日元<br>
+                                        总用时：13分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        阪堺电轨是路面电车，体验传统交通方式<br>
+                                        今船站附近有便利店，可以购买夜宵<br>
+                                        建议在通天阁欣赏完夜景后返程
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <!-- 8月22日 -->
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="toggleDetails(this)">
+                    <div class="timeline-date">8月22日</div>
+                    <div class="timeline-title">环球影城</div>
+                    <div class="timeline-details">
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">住宿地点</div>
+                            <div class="route-transport">🚇 四桥线→JR环状线 约45分钟 300￥</div>
+                            <div class="route-to">环球影城</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚇 交通路线</div>
+                                    <div class="detail-content transport-info">
+                                        步行到花园町站 → 四桥线 → 西梅田站 → 步行到大阪站 → JR环状线 → 环球城站 → 步行到环球影城
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        地铁费用：200日元（四桥线）+ 100日元（JR环状线）= 300日元<br>
+                                        总用时：约45分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">🎢 环球影城</div>
+                                    <div class="detail-content attraction-info">
+                                        亚洲最大的环球影城主题公园<br>
+                                        特色：哈利波特魔法世界、超级任天堂世界、小黄人乐园<br>
+                                        门票：成人约8000-12000日元（建议提前购买）<br>
+                                        建议游览时间：全天（8-10小时）<br>
+                                        必玩项目：哈利波特禁忌之旅、飞天翼龙、超级任天堂世界
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        建议购买快速通行证，节省排队时间<br>
+                                        热门项目：哈利波特禁忌之旅、飞天翼龙、超级任天堂世界<br>
+                                        建议开园前30分钟到达，先玩热门项目<br>
+                                        园内餐饮较贵，可以带些零食和水
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">环球影城</div>
+                            <div class="route-transport">🚇 JR环状线→四桥线 约45分钟 300￥</div>
+                            <div class="route-to">住宿地点</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚇 返程路线</div>
+                                    <div class="detail-content transport-info">
+                                        环球城站 → JR环状线 → 大阪站 → 步行到西梅田站 → 四桥线 → 花园町站 → 步行回家
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        地铁费用：100日元（JR环状线）+ 200日元（四桥线）= 300日元<br>
+                                        总用时：约45分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        建议在闭园前1小时离开，避开返程高峰<br>
+                                        可以在环球城站附近享用晚餐
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <!-- 8月23日 -->
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="toggleDetails(this)">
+                    <div class="timeline-date">8月23日</div>
+                    <div class="timeline-title">奈良一日游</div>
+                    <div class="timeline-details">
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">住宿地点</div>
+                            <div class="route-transport">🚇 四桥线→近铁奈良线 1小时 900￥</div>
+                            <div class="route-to">近铁奈良站</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚇 交通路线</div>
+                                    <div class="detail-content transport-info">
+                                        步行到花园町站 → 四桥线 → 难波站 → 近铁奈良线 → 近铁奈良站
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        地铁费用：200日元（四桥线）+ 700日元（近铁奈良线）= 900日元<br>
+                                        总用时：1小时
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">近铁奈良站</div>
+                            <div class="route-transport">🚶‍♂️ 步行10分钟</div>
+                            <div class="route-to">奈良公园/志津香</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚶‍♂️ 步行路线</div>
+                                    <div class="detail-content">
+                                        从近铁奈良站向西步行约10分钟到达奈良公园
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">🦌 奈良公园</div>
+                                    <div class="detail-content attraction-info">
+                                        世界文化遗产，以自由放养的鹿群闻名<br>
+                                        特色：喂鹿体验、购买鹿仙贝、与鹿互动<br>
+                                        建议游览时间：1-2小时<br>
+                                        必看：鹿群、春日大社参道、若草山
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">🍱 志津香</div>
+                                    <div class="detail-content attraction-info">
+                                        奈良著名的釜饭专门店<br>
+                                        特色：传统釜饭，11点开门，建议提前排队<br>
+                                        地址：奈良公园附近<br>
+                                        必点：釜饭、茶碗蒸、味增汤
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        鹿仙贝价格：150日元/包<br>
+                                        注意：鹿群很温顺，但不要过度喂食<br>
+                                        志津香排队时间较长，建议10:30到达<br>
+                                        釜饭需要等待20-30分钟，可以先去喂鹿
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">奈良公园</div>
+                            <div class="route-transport">🚶‍♂️ 步行</div>
+                            <div class="route-to">奈良国立博物馆</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚶‍♂️ 步行路线</div>
+                                    <div class="detail-content">
+                                        从奈良公园步行到奈良国立博物馆，距离很近
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">🏛️ 奈良国立博物馆</div>
+                                    <div class="detail-content attraction-info">
+                                        日本四大国立博物馆之一，收藏大量佛教艺术品<br>
+                                        特色：佛教雕塑、绘画、工艺品<br>
+                                        门票：成人500日元<br>
+                                        建议游览时间：1-1.5小时<br>
+                                        必看：佛教雕塑、古代绘画、奈良时代文物
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        与奈良公园距离很近，步行即可到达<br>
+                                        馆内禁止拍照，请遵守规定<br>
+                                        有中文语音导览，建议租用<br>
+                                        可以了解奈良作为古都的历史文化
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">春日大社</div>
+                            <div class="route-transport">🚶‍♂️ 步行</div>
+                            <div class="route-to">东大寺</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🏯 东大寺</div>
+                                    <div class="detail-content attraction-info">
+                                        世界最大的木造建筑，大佛殿内供奉15米高的卢舍那大佛<br>
+                                        特色：二月堂、三月堂、大佛殿<br>
+                                        门票：成人600日元<br>
+                                        建议游览时间：1.5-2小时<br>
+                                        必看：大佛殿、卢舍那大佛、二月堂、三月堂
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        大佛殿内的大佛柱洞据说能带来好运<br>
+                                        建议按顺序参观：二月堂 → 三月堂 → 大佛殿<br>
+                                        大佛柱洞需要排队，建议提前准备<br>
+                                        寺内保持安静，注意礼仪
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">东大寺</div>
+                            <div class="route-transport">🚶‍♂️ 步行</div>
+                            <div class="route-to">东向商店街</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🛍️ 东向商店街</div>
+                                    <div class="detail-content attraction-info">
+                                        奈良最古老的商店街，传统与现代并存<br>
+                                        特色：奈良特产、传统小吃、纪念品<br>
+                                        推荐：奈良渍、柿叶寿司、鹿角工艺品<br>
+                                        建议游览时间：1小时<br>
+                                        必买：奈良渍、柿叶寿司、鹿角工艺品
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        小吃种类丰富，建议边走边品尝<br>
+                                        可以购买奈良特产作为伴手礼<br>
+                                        奈良渍是当地特色腌菜，味道独特<br>
+                                        柿叶寿司是奈良传统美食，值得一试
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">东向商店街</div>
+                            <div class="route-transport">🚇 近铁奈良线→四桥线 1小时 900￥</div>
+                            <div class="route-to">住宿地点</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚇 返程路线</div>
+                                    <div class="detail-content transport-info">
+                                        近铁奈良站 → 近铁奈良线 → 难波站 → 四桥线 → 花园町站 → 步行回住宿地点
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        地铁费用：700日元（近铁奈良线）+ 200日元（四桥线）= 900日元<br>
+                                        总用时：1小时
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        奈良一日游全程步行即可，无需额外交通费用<br>
+                                        建议携带充足的水和零食
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">奈良国立博物馆</div>
+                            <div class="route-transport">🚶‍♂️ 步行</div>
+                            <div class="route-to">春日大社</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">⛩️ 春日大社</div>
+                                    <div class="detail-content attraction-info">
+                                        日本三大神社之一，以石灯笼和藤花闻名<br>
+                                        特色：3000多座石灯笼、春日山原始林<br>
+                                        门票：免费（本殿参观需付费）<br>
+                                        建议游览时间：1小时<br>
+                                        必看：石灯笼群、本殿、春日山原始林
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        春日山原始林是世界文化遗产<br>
+                                        石灯笼在傍晚会点亮，景色很美<br>
+                                        本殿参观需要预约，建议提前安排<br>
+                                        可以在此祈求平安和健康
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <!-- 8月24日 -->
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="toggleDetails(this)">
+                    <div class="timeline-date">8月24日</div>
+                    <div class="timeline-title">京都一日游</div>
+                    <div class="timeline-details">
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">住宿地点</div>
+                            <div class="route-transport">🚇 四桥线→东海道本线 1小时 850￥</div>
+                            <div class="route-to">京都站</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚇 交通路线</div>
+                                    <div class="detail-content transport-info">
+                                        步行到花园町站 → 四桥线 → 西梅田站 → 步行到大阪站 → 东海道、山阳本线 → 京都站
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        地铁费用：200日元（四桥线）+ 650日元（东海道本线）= 850日元<br>
+                                        总用时：1小时
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">京都站</div>
+                            <div class="route-transport">🚇 奈良线</div>
+                            <div class="route-to">伏见稻荷大社</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚇 交通路线</div>
+                                    <div class="detail-content transport-info">
+                                        京都站 → 奈良线 → 稻荷站 → 步行到伏见稻荷大社
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">⛩️ 伏见稻荷大社</div>
+                                    <div class="detail-content attraction-info">
+                                        日本最著名的神社之一，以千本鸟居闻名于世<br>
+                                        特色：红色鸟居隧道、狐狸雕像、稻荷山<br>
+                                        门票：免费<br>
+                                        建议游览时间：2-3小时<br>
+                                        必看：千本鸟居、本殿、狐狸雕像、稻荷山
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        建议清晨或傍晚前往，避开人流高峰<br>
+                                        可以购买狐狸绘马作为纪念<br>
+                                        千本鸟居拍照需要排队，建议耐心等待<br>
+                                        稻荷山徒步需要体力，量力而行
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">伏见稻荷大社</div>
+                            <div class="route-transport">🚇 京阪本线→公交 35分钟 500￥</div>
+                            <div class="route-to">清水寺</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚇 交通路线</div>
+                                    <div class="detail-content transport-info">
+                                        步行到伏见稻荷站 → 京阪本线 → 清水五条站 → 步行到五条京阪站 → 四条山科醍醐線８４五条大和大路线 → 五条坂 → 步行到清水寺
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        交通费用：500日元<br>
+                                        总用时：35分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">🏯 清水寺</div>
+                                    <div class="detail-content attraction-info">
+                                        世界文化遗产，以清水舞台和音羽瀑布闻名<br>
+                                        特色：清水舞台、音羽瀑布、地主神社<br>
+                                        门票：成人400日元<br>
+                                        建议游览时间：2-3小时<br>
+                                        必看：清水舞台、音羽瀑布、地主神社、仁王门
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        清水舞台是日本国宝，建筑结构独特<br>
+                                        音羽瀑布有三道水流，据说能带来好运<br>
+                                        地主神社是祈求姻缘的地方<br>
+                                        建议傍晚前往，可以欣赏日落美景
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">清水寺</div>
+                            <div class="route-transport">🚌 207号公交</div>
+                            <div class="route-to">八坂神社</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚌 交通路线</div>
+                                    <div class="detail-content transport-info">
+                                        步行到清水道 → 207号公交 → 祇园站 → 步行到八坂神社
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">⛩️ 八坂神社</div>
+                                    <div class="detail-content attraction-info">
+                                        京都最古老的神社之一，以祇园祭闻名<br>
+                                        特色：祇园祭、灯笼、传统建筑<br>
+                                        门票：免费<br>
+                                        建议游览时间：1小时<br>
+                                        必看：本殿、灯笼、祇园祭相关展示
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">🌸 花见小路</div>
+                                    <div class="detail-content attraction-info">
+                                        京都最著名的艺伎区，传统风情浓厚<br>
+                                        特色：传统建筑、艺伎文化、茶屋<br>
+                                        建议游览时间：30分钟<br>
+                                        必看：传统建筑、石板路、茶屋外观
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        可以体验传统日式建筑风格<br>
+                                        附近有花见小路，可以感受京都传统风情<br>
+                                        祇园祭期间人流量大，建议避开<br>
+                                        注意：不要随意拍照，尊重当地文化
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">八坂神社</div>
+                            <div class="route-transport">🚌 203号公交</div>
+                            <div class="route-to">宝可梦中心</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚌 交通路线</div>
+                                    <div class="detail-content transport-info">
+                                        步行到祇园 → 203号公交 → 四条乌丸 → 步行到宝可梦中心
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">🛍️ 宝可梦中心</div>
+                                    <div class="detail-content attraction-info">
+                                        京都最大的宝可梦主题商店<br>
+                                        特色：宝可梦周边、限定商品、互动体验<br>
+                                        地址：四条乌丸附近<br>
+                                        建议游览时间：1小时<br>
+                                        必买：京都限定宝可梦周边、限定商品
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        可以购买京都限定宝可梦周边<br>
+                                        适合宝可梦爱好者<br>
+                                        店内商品种类丰富，建议预留充足时间<br>
+                                        可以在此购买伴手礼送给朋友
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <!-- 8月25日 -->
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="toggleDetails(this)">
+                    <div class="timeline-date">8月25日</div>
+                    <div class="timeline-title">返程日</div>
+                    <div class="timeline-details">
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">住宿地点</div>
+                            <div class="route-transport">🚇 阪急京都线→堺筋线 约40分钟 300￥</div>
+                            <div class="route-to">天下茶屋</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">🚇 交通路线</div>
+                                    <div class="detail-content transport-info">
+                                        步行到乌丸站 → 阪急京都线 → 淡路站 → 换乘阪急千里线（中途变更为堺筋线）→ 天下茶屋站 → 步行到机场大巴站
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💰 费用信息</div>
+                                    <div class="detail-content cost-info">
+                                        地铁费用：约300日元<br>
+                                        总用时：约40分钟
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        建议提前3小时到达机场<br>
+                                        可以在天下茶屋站附近享用早餐<br>
+                                        注意阪急千里线中途会变更为堺筋线<br>
+                                        建议提前确认机场大巴时刻表
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">大阪关西国际T1</div>
+                            <div class="route-transport">✈️ 12:30-14:05</div>
+                            <div class="route-to">青岛胶东机场</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">✈️ 航班信息</div>
+                                    <div class="detail-content transport-info">
+                                        航班号：待定<br>
+                                        起飞时间：12:30<br>
+                                        到达时间：14:05<br>
+                                        飞行时长：1小时35分钟<br>
+                                        出发地：大阪关西国际机场T1航站楼
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        关西机场有免税店，可以购买伴手礼<br>
+                                        建议提前2小时办理登机手续<br>
+                                        注意：这是转机航班，需要在青岛停留<br>
+                                        青岛机场有休息区，可以稍作休息
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="route-item" onclick="toggleRouteDetails(this, event)">
+                            <div class="route-from">青岛胶东机场</div>
+                            <div class="route-transport">✈️ 18:00-19:30</div>
+                            <div class="route-to">北京首都T3</div>
+                            <div class="route-details">
+                                <div class="detail-section">
+                                    <div class="detail-title">✈️ 航班信息</div>
+                                    <div class="detail-content transport-info">
+                                        航班号：待定<br>
+                                        起飞时间：18:00<br>
+                                        到达时间：19:30<br>
+                                        飞行时长：1小时30分钟<br>
+                                        转机等待时间：约4小时
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-title">💡 小贴士</div>
+                                    <div class="detail-content tip-info">
+                                        青岛机场有休息区，可以稍作休息<br>
+                                        建议提前1.5小时办理登机手续<br>
+                                        转机时间较长，可以在机场用餐<br>
+                                        青岛机场有免税店和特产店
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 检测设备类型
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        function toggleDetails(element) {
+            const details = element.querySelector('.timeline-details');
+            const isExpanded = details.classList.contains('show');
+            
+            // 关闭所有其他展开的详情
+            document.querySelectorAll('.timeline-details.show').forEach(detail => {
+                if (detail !== details) {
+                    detail.classList.remove('show');
+                    detail.parentElement.classList.remove('expanded');
+                }
+            });
+            
+            // 切换当前详情
+            if (isExpanded) {
+                details.classList.remove('show');
+                element.classList.remove('expanded');
+            } else {
+                details.classList.add('show');
+                element.classList.add('expanded');
+                
+                // 移动端自动滚动到展开的内容
+                if (isMobile) {
+                    setTimeout(() => {
+                        element.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center',
+                            inline: 'nearest'
+                        });
+                    }, 300);
+                }
+            }
+        }
+
+        // 添加滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有时间线项目
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // 路线详情展开/收起功能 - 重构版本
+        function toggleRouteDetails(element, event) {
+            event.stopPropagation(); // 阻止事件冒泡
+            
+            // 获取路线详情信息
+            const routeDetailsInfo = document.getElementById('routeDetailsInfo');
+            const overlay = document.getElementById('routeOverlay');
+            const isExpanded = routeDetailsInfo.style.display === 'flex';
+            
+            // 切换当前详情
+            if (isExpanded) {
+                // 关闭详情
+                routeDetailsInfo.style.display = 'none';
+                overlay.classList.remove('show');
+                document.body.style.overflow = '';
+                document.body.classList.remove('route-details-open');
+                
+                // 重新启用时间线内容的交互
+                document.querySelectorAll('.timeline-content').forEach(content => {
+                    content.style.pointerEvents = '';
+                });
+            } else {
+                // 显示详情 - 更新内容并显示在屏幕中央
+                updateRouteDetailsInfo(element);
+                routeDetailsInfo.style.display = 'flex';
+                overlay.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                document.body.classList.add('route-details-open');
+                
+                // 禁用时间线内容的交互，防止悬停效果
+                document.querySelectorAll('.timeline-content').forEach(content => {
+                    content.style.pointerEvents = 'none';
+                });
+            }
+        }
+
+        // 更新路线详情信息内容
+        function updateRouteDetailsInfo(element) {
+            const routeDetailsInfo = document.getElementById('routeDetailsInfo');
+            
+            // 获取路线项目的基本信息
+            const from = element.querySelector('.route-from').textContent;
+            const transport = element.querySelector('.route-transport').textContent;
+            const to = element.querySelector('.route-to').textContent;
+            
+            // 查找该路线项目内部的详细路线信息
+            const existingDetails = element.querySelector('.route-details');
+            
+            if (existingDetails && existingDetails.children.length > 0) {
+                // 如果存在详细的路线信息，直接使用它
+                const detailContent = existingDetails.innerHTML;
+                routeDetailsInfo.innerHTML = detailContent;
+            } else {
+                // 如果没有详细信息，则根据路线类型生成相应的详情内容
+                let detailContent = '';
+                
+                if (transport.includes('✈️')) {
+                    // 航班信息
+                    detailContent = `
+                        <div class="detail-section">
+                            <div class="detail-title">✈️ 航班信息</div>
+                            <div class="detail-content transport-info">
+                                出发地：${from}<br>
+                                目的地：${to}<br>
+                                航班时间：${transport.replace('✈️', '').trim()}<br>
+                                航班号：待定
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <div class="detail-title">💡 小贴士</div>
+                            <div class="detail-content tip-info">
+                                建议提前2小时到达机场<br>
+                                请确认航班信息，准备相关证件
+                            </div>
+                        </div>
+                    `;
+                } else if (transport.includes('🚇')) {
+                    // 地铁信息
+                    detailContent = `
+                        <div class="detail-section">
+                            <div class="detail-title">🚇 交通路线</div>
+                            <div class="detail-content transport-info">
+                                从 ${from} 到 ${to}<br>
+                                交通方式：${transport}
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <div class="detail-title">💡 小贴士</div>
+                            <div class="detail-content tip-info">
+                                建议购买IC卡（如PASMO或ICOCA）<br>
+                                注意换乘站点和时间
+                            </div>
+                        </div>
+                    `;
+                } else if (transport.includes('🚌')) {
+                    // 公交信息
+                    detailContent = `
+                        <div class="detail-section">
+                            <div class="detail-title">🚌 公交路线</div>
+                            <div class="detail-content transport-info">
+                                从 ${from} 到 ${to}<br>
+                                公交路线：${transport}
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <div class="detail-title">💡 小贴士</div>
+                            <div class="detail-content tip-info">
+                                公交班次可能较少，建议提前查询时刻表<br>
+                                准备零钱或IC卡
+                            </div>
+                        </div>
+                    `;
+                } else if (transport.includes('🚶‍♂️')) {
+                    // 步行信息
+                    detailContent = `
+                        <div class="detail-section">
+                            <div class="detail-title">🚶‍♂️ 步行路线</div>
+                            <div class="detail-content transport-info">
+                                从 ${from} 步行到 ${to}<br>
+                                步行信息：${transport}
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <div class="detail-title">💡 小贴士</div>
+                            <div class="detail-content tip-info">
+                                步行是最环保的出行方式<br>
+                                可以欣赏沿途风景，体验当地生活
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // 默认信息
+                    detailContent = `
+                        <div class="detail-section">
+                            <div class="detail-title">📍 路线信息</div>
+                            <div class="detail-content transport-info">
+                                从 ${from} 到 ${to}<br>
+                                交通方式：${transport}
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <div class="detail-title">💡 小贴士</div>
+                            <div class="detail-content tip-info">
+                                请根据实际情况调整行程<br>
+                                建议提前了解相关信息
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                routeDetailsInfo.innerHTML = detailContent;
+            }
+            
+            // 重新添加关闭按钮
+            const closeButton = document.createElement('div');
+            closeButton.className = 'close-button';
+            closeButton.innerHTML = '×';
+            closeButton.onclick = closeRouteDetails;
+            routeDetailsInfo.insertBefore(closeButton, routeDetailsInfo.firstChild);
+        }
+
+        // 关闭路线详情
+        function closeRouteDetails() {
+            document.getElementById('routeDetailsInfo').style.display = 'none';
+            document.getElementById('routeOverlay').classList.remove('show');
+            document.body.style.overflow = '';
+            document.body.classList.remove('route-details-open');
+            
+            // 重新启用时间线内容的交互
+            document.querySelectorAll('.timeline-content').forEach(content => {
+                content.style.pointerEvents = '';
+            });
+        }
+
+        // 点击其他地方关闭详情
+        document.addEventListener('click', function(event) {
+            // 如果点击的不是路线项目，关闭所有展开的详情
+            if (!event.target.closest('.route-item')) {
+                document.getElementById('routeDetailsInfo').style.display = 'none';
+                document.getElementById('routeOverlay').classList.remove('show');
+                document.body.style.overflow = '';
+                // 移除body上的禁用悬停类
+                document.body.classList.remove('route-details-open');
+                
+                // 重新启用时间线内容的交互
+                document.querySelectorAll('.timeline-content').forEach(content => {
+                    content.style.pointerEvents = '';
+                });
+            }
+        });
+
+        // 点击遮罩层关闭详情
+        document.getElementById('routeOverlay').addEventListener('click', function() {
+            document.getElementById('routeDetailsInfo').style.display = 'none';
+            this.classList.remove('show');
+            document.body.style.overflow = '';
+            // 移除body上的禁用悬停类
+            document.body.classList.remove('route-details-open');
+            
+            // 重新启用时间线内容的交互
+            document.querySelectorAll('.timeline-content').forEach(content => {
+                content.style.pointerEvents = '';
+            });
+        });
+
+        // 触摸设备优化 - 重构版本，移除所有可能导致位移的效果
+        if (isTouchDevice) {
+            // 触摸事件处理 - 只保留点击功能，移除所有视觉变换
+            document.querySelectorAll('.timeline-content').forEach(content => {
+                let touchStartTime = 0;
+                let touchStartY = 0;
+                
+                content.addEventListener('touchstart', function(e) {
+                    touchStartTime = Date.now();
+                    touchStartY = e.touches[0].clientY;
+                    // 移除触摸时的变换效果，防止干扰路线详情
+                }, { passive: true });
+                
+                content.addEventListener('touchend', function(e) {
+                    const touchEndTime = Date.now();
+                    const touchEndY = e.changedTouches[0].clientY;
+                    const touchDuration = touchEndTime - touchStartTime;
+                    const touchDistance = Math.abs(touchEndY - touchStartY);
+                    
+                    // 短触摸且距离小，认为是点击
+                    if (touchDuration < 300 && touchDistance < 10) {
+                        toggleDetails(this);
+                    }
+                }, { passive: true });
+            });
+            
+            // 路线项目触摸效果 - 移除所有变换
+            document.querySelectorAll('.route-item').forEach(route => {
+                // 移除触摸变换效果，保持静态
+            });
+            
+            // 信息卡片触摸效果 - 移除所有变换
+            document.querySelectorAll('.info-card').forEach(card => {
+                // 移除触摸变换效果，保持静态
+            });
+        } else {
+            // 桌面端鼠标悬停效果 - 当路线详情打开时禁用
+            document.querySelectorAll('.timeline-content').forEach(content => {
+                content.addEventListener('mouseenter', function() {
+                    // 只有在路线详情未打开时才允许悬停效果
+                    if (!document.body.classList.contains('route-details-open')) {
+                        this.style.transform = 'scale(1.05)';
+                    }
+                });
+                
+                content.addEventListener('mouseleave', function() {
+                    if (!this.classList.contains('expanded') && !document.body.classList.contains('route-details-open')) {
+                        this.style.transform = 'scale(1)';
+                    }
+                });
+            });
+            
+            // 路线项目鼠标悬停效果 - 当路线详情打开时禁用
+            document.querySelectorAll('.route-item').forEach(route => {
+                route.addEventListener('mouseenter', function() {
+                    // 只有在路线详情未打开时才允许悬停效果
+                    if (!document.body.classList.contains('route-details-open')) {
+                        this.style.transform = 'translateX(5px)';
+                    }
+                });
+                
+                route.addEventListener('mouseleave', function() {
+                    if (!document.body.classList.contains('route-details-open')) {
+                        this.style.transform = '';
+                    }
+                });
+            });
+        }
+
+        // 防止双击缩放（移动端）
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // 添加页面加载动画
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 1s ease-in-out';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // 移动端性能优化
+        if (isMobile) {
+            // 减少动画复杂度
+            document.documentElement.style.setProperty('--animation-duration', '0.3s');
+            
+            // 优化滚动性能
+            let ticking = false;
+            function updateScroll() {
+                ticking = false;
+            }
+            
+            function requestTick() {
+                if (!ticking) {
+                    requestAnimationFrame(updateScroll);
+                    ticking = true;
+                }
+            }
+            
+            window.addEventListener('scroll', requestTick, { passive: true });
+        }
+
+        // 添加键盘导航支持
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // ESC键关闭所有展开的详情
+                document.querySelectorAll('.timeline-details.show').forEach(detail => {
+                    detail.classList.remove('show');
+                    detail.parentElement.classList.remove('expanded');
+                });
+                
+                // ESC键关闭路线详情
+                document.getElementById('routeDetailsInfo').style.display = 'none';
+                document.getElementById('routeOverlay').classList.remove('show');
+                document.body.style.overflow = '';
+                // 移除body上的禁用悬停类
+                document.body.classList.remove('route-details-open');
+                
+                // 重新启用时间线内容的交互
+                document.querySelectorAll('.timeline-content').forEach(content => {
+                    content.style.pointerEvents = '';
+                });
+            }
+        });
+
+        // 添加屏幕方向变化处理
+        window.addEventListener('orientationchange', function() {
+            setTimeout(() => {
+                // 重新计算布局
+                window.dispatchEvent(new Event('resize'));
+            }, 100);
+        });
+
+        // 添加网络状态检测
+        if ('connection' in navigator) {
+            navigator.connection.addEventListener('change', function() {
+                if (navigator.connection.effectiveType === 'slow-2g' || 
+                    navigator.connection.effectiveType === '2g') {
+                    // 慢速网络时减少动画
+                    document.documentElement.style.setProperty('--animation-duration', '0.1s');
+                }
+            });
+        }
+    </script>
+</body>
+</html> 
